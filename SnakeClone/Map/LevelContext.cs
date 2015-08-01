@@ -1,15 +1,56 @@
 ﻿using SnakeClone.Actors;
+using SnakeClone.Actors.States;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SnakeClone.Map
 {
-    public class LevelContext
+    internal class LevelContext
     {
-        int Lives { get; set; } = 3;
+        private readonly Spawner<SnakePiece> tailSpawner;
+        private readonly SnakePiece snakeHead;
+        private readonly Queue<ISnakeState> states;
+        private readonly Action restart;
 
-        //ISnakeState state;
+        public LevelContext(SnakePiece snakeHead, Spawner<SnakePiece> tailSpawner,Direction initialDirection,Action restart, int lives)
+        {
+            this.tailSpawner = tailSpawner;
+            this.snakeHead = snakeHead;
+            this.restart = restart;
+            Direction = initialDirection;
+            Lives = lives;
+        }
+        public int Lives { get; set; }
+
+        public Spawner<SnakePiece> TailSpawner
+        {
+            get { return tailSpawner; }
+        }
+
+        public SnakePiece SnakeHead
+        {
+            get { return snakeHead; }
+        }
+
+        public Direction Direction
+        {
+            get;
+            set;
+        }
+
+        public void RestartLevel()
+        {
+            restart();
+        }
+
+        public void AddState(ISnakeState state)
+        {
+            states.Enqueue(state);
+        }
+
+        public ISnakeState GetState()
+        {
+            return states.Dequeue();
+        }
     }
 }

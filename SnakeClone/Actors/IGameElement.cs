@@ -6,7 +6,7 @@ namespace SnakeClone.Actors
     internal interface IGameElement
     {
         void HandleState();
-        void Update(GameTime gameTime);
+        void Update(float deltaTime);
         void Render(SpriteBatch batch);
     }
 }

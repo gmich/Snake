@@ -11,7 +11,7 @@ namespace SnakeClone.Actors
     {
         public void HandleState()
         {
-            throw new NotImplementedException();
+            return;
         }
 
         public void Render(SpriteBatch batch)
@@ -19,7 +19,7 @@ namespace SnakeClone.Actors
             throw new NotImplementedException();
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(float deltaTime)
         {
             throw new NotImplementedException();
         }

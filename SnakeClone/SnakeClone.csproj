@@ -38,19 +38,26 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Actors\AddTailState.cs" />
+    <Compile Include="Actors\States\DeathState.cs" />
+    <Compile Include="Actors\States\ChangeDirectionState.cs" />
+    <Compile Include="Actors\States\AddTailState.cs" />
     <Compile Include="Actors\Food.cs" />
     <Compile Include="Actors\IGameElement.cs" />
-    <Compile Include="Actors\Snake.cs" />
-    <Compile Include="Actors\ISnakeState.cs" />
+    <Compile Include="Actors\SnakePiece.cs" />
+    <Compile Include="Actors\States\ISnakeState.cs" />
     <Compile Include="Actors\Spawner.cs" />
     <Compile Include="AssetContainer.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameType.cs" />
+    <Compile Include="Input\IInput.cs" />
+    <Compile Include="Input\InputManager.cs" />
+    <Compile Include="Input\KeyboardInput.cs" />
+    <Compile Include="Input\KeyboardInputKeys.cs" />
     <Compile Include="Map\AdjustmentRules.cs" />
     <Compile Include="Map\BlankMapGenerator.cs" />
     <Compile Include="Map\DeathTile.cs" />
     <Compile Include="Map\BlankTile.cs" />
+    <Compile Include="Actors\Direction.cs" />
     <Compile Include="Map\Level.cs" />
     <Compile Include="Map\IMapGenerator.cs" />
     <Compile Include="Map\LevelContext.cs" />

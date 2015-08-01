@@ -16,7 +16,7 @@ namespace SnakeClone.Actors
             this.spawnerDelegate = spawnerDelegate;
         }
 
-        public IGameElement Spawn()
+        public TElement Spawn()
         {
             return spawnerDelegate();
         }

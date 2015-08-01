@@ -5,15 +5,15 @@ using SnakeClone.Rendering;
 
 namespace SnakeClone.Actors
 {
-    internal class Snake : IGameElement
+    internal class SnakePiece : IGameElement
     {
         private Point location;
-        public Snake(Transform transform)
+        public SnakePiece(Transform transform)
         {
 
         }
 
-        public void Bind(Snake tail)
+        public void Bind(SnakePiece tail)
         {
             if (!HasTail)
             {
@@ -35,7 +35,7 @@ namespace SnakeClone.Actors
         }
 
         private bool HasTail { get { return Tail != null; } }
-        private Snake Tail { get; set; }
+        private SnakePiece Tail { get; set; }
 
         public void Render(SpriteBatch batch)
         {
@@ -50,7 +50,7 @@ namespace SnakeClone.Actors
             throw new NotImplementedException();
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(float deltaTime)
         {
             throw new NotImplementedException();
         }

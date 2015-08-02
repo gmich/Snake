@@ -1,27 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using SnakeClone.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace SnakeClone.Actors
 {
-    class Food : IGameElement
+    internal class Food : IGameElement
     {
-        public void HandleState()
-        {
-            return;
-        }
+        private readonly Transform transform;
 
-        public void Render(SpriteBatch batch)
+        public Food(Transform transform)
         {
-            throw new NotImplementedException();
+            this.transform = transform;
         }
 
         public void Update(float deltaTime)
         {
-            throw new NotImplementedException();
+            return;
         }
+
+        public void Render(RenderContext renderContext)
+        {
+            renderContext.Batch.Draw(transform.Texture,
+                new Rectangle((int)transform.Location.X * renderContext.LevelRenderInfo.TileWidth,
+                              (int)transform.Location.Y * renderContext.LevelRenderInfo.TileHeight,
+                              renderContext.LevelRenderInfo.TileWidth,
+                              renderContext.LevelRenderInfo.TileHeight),
+                null,
+                transform.Color,
+                transform.Rotation,
+                Vector2.Zero,
+                SpriteEffects.None,
+                0.0f);
+        }
+
     }
 }

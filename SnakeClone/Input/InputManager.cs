@@ -30,7 +30,7 @@ namespace SnakeClone.Input
                 return keyboard.Value;
             }
         }
-               
+
         #region Update
 
         public override void Update(GameTime gameTime)
@@ -40,13 +40,10 @@ namespace SnakeClone.Input
 
         private static void Flush(IInput input)
         {
-            if (input != null)
-            {
-                input.Flush();
-            }
+            input?.Flush();
         }
 
         #endregion
-        
+
     }
 }

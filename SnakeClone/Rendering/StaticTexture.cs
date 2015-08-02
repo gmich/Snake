@@ -5,14 +5,14 @@ namespace SnakeClone.Rendering
 {
     internal class StaticTexture: ITexture
     {
-        private readonly Func<Texture2D> textureGetter;
-        public StaticTexture(Func<Texture2D> textureGetter)
+        private readonly Texture2D texture;
+        public StaticTexture(Texture2D texture)
         {
-            this.textureGetter = textureGetter;
+            this.texture = texture;
         }
         public Texture2D GetTexture()
         {
-            return textureGetter();
+            return texture;
         }
 
     }

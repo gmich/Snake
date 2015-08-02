@@ -7,6 +7,7 @@ namespace SnakeClone.Map
 {
     class BlankTile : ITile
     {
+
         public void Intersect(LevelContext context)
         {
             return;

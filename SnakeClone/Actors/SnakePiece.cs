@@ -1,18 +1,21 @@
-﻿using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
 using SnakeClone.Rendering;
 
 namespace SnakeClone.Actors
 {
     internal class SnakePiece : IGameElement
     {
+        private readonly Transform transform;
         private Point location;
+
         public SnakePiece(Transform transform)
         {
-
+            this.transform = transform;
         }
 
+        private SnakePiece Tail { get; set; }
+        private bool HasTail { get { return Tail != null; } }
+        
         public void Bind(SnakePiece tail)
         {
             if (!HasTail)
@@ -25,34 +28,22 @@ namespace SnakeClone.Actors
             }
         }
 
-        public void Move(Point newLocation)
+        public void MoveTo(Point newLocation)
         {
-            if(HasTail)
-            {
-                Tail.location = location;
-            }
+            Tail?.MoveTo(location);
             location = newLocation;
         }
 
-        private bool HasTail { get { return Tail != null; } }
-        private SnakePiece Tail { get; set; }
-
-        public void Render(SpriteBatch batch)
+        public void Render(RenderContext renderContext)
         {
-            if (HasTail)
-            {
-                Tail.Render(batch);
-            }
-        }
-
-        public void HandleState()
-        {
-            throw new NotImplementedException();
+            //render local
+            Tail?.Render(renderContext);
         }
 
         public void Update(float deltaTime)
         {
-            throw new NotImplementedException();
+            //update local
+            Tail?.Update(deltaTime);
         }
 
     }

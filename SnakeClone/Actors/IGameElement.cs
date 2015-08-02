@@ -1,12 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using SnakeClone.Rendering;
 
 namespace SnakeClone.Actors
 {
     internal interface IGameElement
     {
-        void HandleState();
         void Update(float deltaTime);
-        void Render(SpriteBatch batch);
+        void Render(RenderContext renderContext);
     }
 }

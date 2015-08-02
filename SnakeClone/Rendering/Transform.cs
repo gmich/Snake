@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SnakeClone.Rendering
 {
@@ -7,32 +8,32 @@ namespace SnakeClone.Rendering
     {
 
         public Transform(Func<Color> color,
-                         Func<ITexture> texture,
+                         Func<Texture2D> texture,
                          Func<Vector2> scale,
                          Func<Vector2> location,
-                         Func<Rectangle> frame,
-                         Func<float> rotation)
+                         Func<float> rotation,
+                         Func<float> layer)
         {
             this.color = color;
             this.texture = texture;
             this.scale = scale;
             this.location = location;
             this.rotation = rotation;
-            this.frame = frame;
+            this.layer = layer;
         }
 
         private readonly Func<Color> color;
-        private readonly Func<ITexture> texture;
+        private readonly Func<Texture2D> texture;
         private readonly Func<Vector2> scale;
         private readonly Func<Vector2> location;
         private readonly Func<float> rotation;
-        private readonly Func<Rectangle> frame;
+        private readonly Func<float> layer;
 
-        public Rectangle Frame { get { return frame(); } }
         public Color Color { get { return color(); } }
-        public ITexture Texture { get { return texture(); } }
+        public Texture2D Texture { get { return texture(); } }
         public Vector2 Scale { get { return scale(); } }
         public Vector2 Location { get { return location(); } }
-        private float Rotation { get { return rotation(); } }
+        public float Rotation { get { return rotation(); } }
+        public float Layer {  get { return layer(); } }
     }
 }

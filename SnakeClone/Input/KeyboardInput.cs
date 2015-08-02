@@ -42,8 +42,7 @@ namespace SnakeClone.Input
 
         public void Flush()
         {
-            previousKeyboardState = keyboardState;
-            
+            previousKeyboardState = keyboardState;            
             keyboardState = Keyboard.GetState();
         }
 

@@ -1,27 +1,35 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using SnakeClone.Actors;
+using SnakeClone.Providers;
+using SnakeClone.Rendering;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
 
 namespace SnakeClone.Map
 {
-    class Level
+    internal class Level
     {
         private readonly ITile[,] grid;
         private readonly AdjustmentRules adjustmentRules;
+        private readonly LevelContext context;
+        private readonly LevelSettings levelSettings;
 
-        public Level(IMapGenerator generator, AdjustmentRules adjustmentRules)
+        public Level(ILevelProvider levelProvider, AssetContainer<Func<Texture2D>> assetContainer)
         {
-            grid = generator.Generate();
-            this.adjustmentRules = adjustmentRules;
+            grid = levelProvider.Grid;
+            levelSettings = levelProvider.LevelSettings;
+            adjustmentRules = AdjustmentRules.Default(levelProvider.LevelSettings.HorizontalTileCount,
+                                                           levelProvider.LevelSettings.VerticalTileCount);
+            //context = new LevelContext(new SnakePiece(new Transform(()=>assetContainer["snakeHead"].))
+            
         }
+        public LevelContext Context { get { return context; } }
+
 
         public Point AdjustLocation(Point other)
         {
-            return adjustmentRules.Apply(other); 
+            return adjustmentRules.Apply(other);
         }
 
         public ITile this[Point point]
@@ -34,6 +42,6 @@ namespace SnakeClone.Map
                 return grid[point.X, point.Y];
             }
         }
-        
+
     }
 }

@@ -26,15 +26,6 @@ namespace SnakeClone
             return true;
         }
 
-        public bool Add(string id, string path)
-        {
-            if (assets.ContainsKey(id))
-            {
-                return false;
-            }
-            assets.Add(id, content.Load<TAsset>(path));
-            return true;
-        }
 
         public bool Remove(string id)
         {

@@ -1,4 +1,5 @@
-﻿using SnakeClone.Actors;
+﻿using Microsoft.Xna.Framework.Graphics;
+using SnakeClone.Actors;
 using SnakeClone.Actors.States;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,11 @@ namespace SnakeClone.Map
         private readonly Queue<ISnakeState> states;
         private readonly Action restart;
 
-        public LevelContext(SnakePiece snakeHead, Spawner<SnakePiece> tailSpawner,Direction initialDirection,Action restart, int lives)
+        public LevelContext(SnakePiece snakeHead,
+                            Spawner<SnakePiece> tailSpawner,
+                            Direction initialDirection,
+                            Action restart,
+                            int lives)
         {
             this.tailSpawner = tailSpawner;
             this.snakeHead = snakeHead;
@@ -20,6 +25,7 @@ namespace SnakeClone.Map
             Direction = initialDirection;
             Lives = lives;
         }
+
         public int Lives { get; set; }
 
         public Spawner<SnakePiece> TailSpawner

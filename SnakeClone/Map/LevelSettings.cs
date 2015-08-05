@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using SnakeClone.Actors;
 
 namespace SnakeClone.Map
 {
@@ -6,17 +7,27 @@ namespace SnakeClone.Map
     {
         private readonly Point snakeInitialPosition;
         private readonly IFoodFactory foodFactory;
+
         private readonly int horizontalTileCount;
         private readonly int verticalTileCount;
+        private readonly int maxLives;
 
-        public LevelSettings(int horizontalTileCount, int verticalTileCount,IFoodFactory foodFactory, Point snakeInitialPosition, double snakeSpeed)
+        public LevelSettings(int horizontalTileCount, 
+                             int verticalTileCount,
+                             IFoodFactory foodFactory,
+                             Point snakeInitialPosition,
+                             double snakeSpeed,
+                             int maxLives)
         {
+            this.maxLives = maxLives;
             this.snakeInitialPosition = snakeInitialPosition;
             this.foodFactory = foodFactory;
             this.horizontalTileCount = horizontalTileCount;
             this.verticalTileCount = verticalTileCount;
             SnakeSpeed = snakeSpeed;
         }
+
+        public int MaxLives {  get { return maxLives; } }
 
         public Point SnakeInitialPosition { get { return snakeInitialPosition; } }
 

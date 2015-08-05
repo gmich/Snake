@@ -1,8 +1,4 @@
 ﻿using SnakeClone.Map;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SnakeClone.Actors.States
 {
@@ -10,7 +6,10 @@ namespace SnakeClone.Actors.States
     {
         public void Handle(LevelContext context)
         {
-            context.SnakeHead.Bind(context.TailSpawner.Spawn());
+            context.SnakeHead.Bind(context.TailSpawner.Spawn(context.
+                SnakeHead.
+                TailLocation
+                .AsVector2()));
         }
     }
 }

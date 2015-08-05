@@ -1,8 +1,6 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SnakeClone.Rendering
 {
@@ -24,5 +22,20 @@ namespace SnakeClone.Rendering
         public SpriteBatch Batch {  get { return batch; } }
 
         public AssetContainer<Func<Texture2D>>  TextureContainer {  get { return textureContainer; } }
+
+        public void RenderInGrid(Transform transform)
+        {
+            Batch.Draw(TextureContainer[transform.TextureReference](),
+                        new Rectangle((int)transform.Location.X * LevelRenderInfo.TileWidth,
+                                      (int)transform.Location.Y * LevelRenderInfo.TileHeight,
+                                      LevelRenderInfo.TileWidth,
+                                      LevelRenderInfo.TileHeight),
+                        null,
+                        transform.Color,
+                        transform.Rotation,
+                        Vector2.Zero,
+                        SpriteEffects.None,
+                        0.0f);
+        }
     }
 }

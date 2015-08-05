@@ -5,14 +5,30 @@ namespace SnakeClone.Map
 {
     class RandomFoodFactory : IFoodFactory
     {
-        public bool CanCreate(float timeDelta)
+        private readonly Random rand = new Random();
+        private double foodCreationTimeInterval;
+        private double passedTime;
+
+        public RandomFoodFactory()
         {
-            throw new NotImplementedException();
+            ResetTimer();
         }
 
-        public Food Create()
+        private void ResetTimer()
         {
-            throw new NotImplementedException();
+            foodCreationTimeInterval = rand.Next(2, 10) / 100;
+        }
+
+        public Food Create(double timeDelta)        
+        {
+            passedTime += timeDelta;
+            if (passedTime >= foodCreationTimeInterval)
+            {
+                passedTime = 0.0d;
+                ResetTimer();
+                return new Food(null);
+            }
+            return null;
         }
     }
 }

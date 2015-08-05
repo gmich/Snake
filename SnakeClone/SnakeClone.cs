@@ -1,30 +1,32 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using SnakeClone.Actors;
 using SnakeClone.Actors.States;
 using SnakeClone.Map;
-using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using static SnakeClone.Input.InputManager;
 using Microsoft.Xna.Framework.Content;
 using SnakeClone.Rendering;
 using SnakeClone.Providers;
+using static SnakeClone.Input.InputManager;
+using System;
 
 namespace SnakeClone
 {
     internal class SnakeClone
     {
-        private readonly Level level;
         private readonly List<IGameElement> elements = new List<IGameElement>();
         private readonly ReadOnlyCollection<AddState> directionStates;
-        private readonly RenderContext renderContext;
         private readonly IAssetProvider assetProvider;
+        private readonly ILevelTracker levelTracker;
 
-        public SnakeClone(ILevelProvider levelProvider, IAssetProvider assetProvider)
-        {                 
+        private RenderContext renderContext;
+        private Level level;
+        private double passedTime;
 
+        public SnakeClone(ILevelTracker levelTracker, IAssetProvider assetProvider)
+        {
+            this.assetProvider = assetProvider;
+            this.levelTracker = levelTracker;
             directionStates = new ReadOnlyCollection<AddState>(new List<AddState>
             {
                 AddState.To(()=>level.Context.AddState(new ChangeDirectionState(Direction.Up)))
@@ -40,22 +42,38 @@ namespace SnakeClone
           
         }
 
+        public void Restart() 
+        {
+            level = new Level(levelTracker.Current,NextLevel,Restart);
+        }
+
+        public void NextLevel()
+        {
+            level = new Level(levelTracker.Current, NextLevel, Restart);
+        }
+
         public void LoadContent(SpriteBatch batch, ContentManager content)
         {
-            //renderContext = new RenderContext()
-            //level = new Level(levelProvider,
+            var textureContainer = new AssetContainer<Func<Texture2D>>(content);
+            assetProvider.LoadAssets(textureContainer);
+            renderContext = new RenderContext(assetProvider.RenderInfo, batch, textureContainer);
         }
 
         public void HandleState()
         {
-            foreach(var state in directionStates)
+            if (level.Settings.SnakeSpeed < passedTime)
             {
-                state.Check();
+                foreach (var state in directionStates)
+                {
+                    state.Check();
+                }
+                passedTime = 0.0d;
             }
         }
 
-        public void Update(float deltaTime)
+        public void Update(double deltaTime)
         {
+            passedTime += deltaTime;
             elements.ForEach(element => element.Update(deltaTime));
         }
 

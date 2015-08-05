@@ -55,10 +55,13 @@
     <Compile Include="Input\KeyboardInput.cs" />
     <Compile Include="Input\KeyboardInputKeys.cs" />
     <Compile Include="Map\AdjustmentRules.cs" />
+    <Compile Include="Map\ILevelTracker.cs" />
+    <Compile Include="Map\LevelTracker.cs" />
+    <Compile Include="Utilities\PointExtensions.cs" />
     <Compile Include="Providers\AssetReference.cs" />
     <Compile Include="Providers\HardCodedLevelProvider.cs" />
     <Compile Include="Map\DeathTile.cs" />
-    <Compile Include="Map\BlankTile.cs" />
+    <Compile Include="Map\CommonTile.cs" />
     <Compile Include="Actors\Direction.cs" />
     <Compile Include="Map\IFoodFactory.cs" />
     <Compile Include="Map\Level.cs" />
@@ -71,7 +74,6 @@
     <Compile Include="Map\RandomFoodFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rendering\IRenderer.cs" />
     <Compile Include="Rendering\LevelRenderInfo.cs" />
     <Compile Include="Rendering\NotransformationRenderer.cs" />
     <Compile Include="Rendering\RenderContext.cs" />

@@ -12,13 +12,16 @@ namespace SnakeClone.Map
         private readonly SnakePiece snakeHead;
         private readonly Queue<ISnakeState> states;
         private readonly Action restart;
+        private readonly Action nextLevel;
 
         public LevelContext(SnakePiece snakeHead,
                             Spawner<SnakePiece> tailSpawner,
                             Direction initialDirection,
                             Action restart,
+                            Action nextLevel,
                             int lives)
         {
+            this.nextLevel = nextLevel;
             this.tailSpawner = tailSpawner;
             this.snakeHead = snakeHead;
             this.restart = restart;
@@ -45,6 +48,11 @@ namespace SnakeClone.Map
         }
 
         public void RestartLevel()
+        {
+            restart();
+        }
+
+        public void NextLevel()
         {
             restart();
         }

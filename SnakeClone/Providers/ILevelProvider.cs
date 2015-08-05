@@ -1,4 +1,5 @@
-﻿using SnakeClone.Map;
+﻿using SnakeClone.Actors;
+using SnakeClone.Map;
 
 namespace SnakeClone.Providers
 {
@@ -7,6 +8,10 @@ namespace SnakeClone.Providers
         ITile[,] Grid { get; }
 
         LevelSettings LevelSettings { get; }
+
+        SnakePiece Head { get; }
+
+        Spawner<SnakePiece> TailSpawner { get; }
 
     }
 }

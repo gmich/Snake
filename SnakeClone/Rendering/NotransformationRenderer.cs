@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace SnakeClone.Rendering
 {
-    class NotransformationRenderer : IRenderer
+    class NotransformationRenderer 
     {
         private readonly GraphicsDevice gfxDevice;
         private readonly SpriteBatch batch;

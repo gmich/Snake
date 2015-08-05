@@ -15,7 +15,7 @@ namespace SnakeClone.Actors
 
         private SnakePiece Tail { get; set; }
         private bool HasTail { get { return Tail != null; } }
-        
+
         public void Bind(SnakePiece tail)
         {
             if (!HasTail)
@@ -28,6 +28,11 @@ namespace SnakeClone.Actors
             }
         }
 
+        public Point TailLocation
+        {
+            get { return Tail?.location ?? location; }
+        }
+
         public void MoveTo(Point newLocation)
         {
             Tail?.MoveTo(location);
@@ -36,11 +41,11 @@ namespace SnakeClone.Actors
 
         public void Render(RenderContext renderContext)
         {
-            //render local
+            renderContext.RenderInGrid(transform);
             Tail?.Render(renderContext);
         }
 
-        public void Update(float deltaTime)
+        public void Update(double deltaTime)
         {
             //update local
             Tail?.Update(deltaTime);

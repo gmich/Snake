@@ -1,17 +1,18 @@
 ﻿using SnakeClone.Rendering;
 
-namespace SnakeClone.Actors
+namespace SnakeClone.Map
 {
-    internal class Food : IGameElement
+    internal class CommonTile : ITile
     {
+
         private readonly Transform transform;
 
-        public Food(Transform transform)
+        public CommonTile(Transform transform)
         {
             this.transform = transform;
         }
 
-        public void Update(double deltaTime)
+        public void Intersect(LevelContext context)
         {
             return;
         }
@@ -20,6 +21,5 @@ namespace SnakeClone.Actors
         {
             renderContext.RenderInGrid(transform);
         }
-
     }
 }

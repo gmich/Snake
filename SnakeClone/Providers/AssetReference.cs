@@ -21,5 +21,8 @@ namespace SnakeClone.Providers
         public Type Type {  get { return type; } }
 
         public string Reference {  get { return reference; } }
+
+        public const string WhitePixel = "blank";
+
     }
 }

@@ -4,7 +4,7 @@ namespace SnakeClone.Actors
 {
     internal interface IGameElement
     {
-        void Update(float deltaTime);
+        void Update(double deltaTime);
         void Render(RenderContext renderContext);
     }
 }

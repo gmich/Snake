@@ -8,7 +8,7 @@ namespace SnakeClone.Actors
         private readonly Func<Point, Point> getNext;
         private Direction(Func<Point, Point> next)
         {
-            this.getNext = next;
+            getNext = next;
         }
         public Point Move(Point current)
         {

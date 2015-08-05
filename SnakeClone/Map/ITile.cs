@@ -4,5 +4,6 @@
     {
         void Intersect(LevelContext context);
 
+        void Render(Rendering.RenderContext renderContext);
     }
 }

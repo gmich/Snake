@@ -16,7 +16,7 @@ namespace SnakeClone.Providers
 
         public IEnumerable<AssetReference> LoadAssets(AssetContainer<Func<Texture2D>> container)
         {
-            var assetTileReference = new AssetReference(typeof(BlankTile), Color.White, "blankTile");
+            var assetTileReference = new AssetReference(typeof(ITile), Color.White, "blankTile");
             var snakeHeadReference = new AssetReference(typeof(SnakePiece), Color.White, "snakeHead");
             var snakeBodyReference = new AssetReference(typeof(SnakePiece), Color.Blue, "snakeBody");
 

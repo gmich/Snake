@@ -1,21 +1,21 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 
 namespace SnakeClone.Actors
 {
-    internal class Spawner<TElement> 
+    internal class Spawner<TElement>
         where TElement : IGameElement
     {
+        private readonly Func<Vector2, TElement> spawnerDelegate;
 
-        private readonly Func<TElement> spawnerDelegate;
-
-        public Spawner(Func<TElement> spawnerDelegate)
+        public Spawner(Func<Vector2, TElement> spawnerDelegate)
         {
             this.spawnerDelegate = spawnerDelegate;
         }
 
-        public TElement Spawn()
+        public TElement Spawn(Vector2 position)
         {
-            return spawnerDelegate();
+            return spawnerDelegate(position);
         }
     }
 }

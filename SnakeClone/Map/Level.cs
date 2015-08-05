@@ -14,18 +14,28 @@ namespace SnakeClone.Map
         private readonly AdjustmentRules adjustmentRules;
         private readonly LevelContext context;
         private readonly LevelSettings levelSettings;
-
-        public Level(ILevelProvider levelProvider, AssetContainer<Func<Texture2D>> assetContainer)
+        private readonly ILevelProvider levelProvider;
+        public Level(ILevelProvider levelProvider,Action next, Action restart)
         {
+            this.levelProvider = levelProvider;
             grid = levelProvider.Grid;
             levelSettings = levelProvider.LevelSettings;
             adjustmentRules = AdjustmentRules.Default(levelProvider.LevelSettings.HorizontalTileCount,
                                                            levelProvider.LevelSettings.VerticalTileCount);
-            //context = new LevelContext(new SnakePiece(new Transform(()=>assetContainer["snakeHead"].))
-            
+
+            context = new LevelContext(levelProvider.Head,
+                                       levelProvider.TailSpawner,
+                                       Direction.Left,
+                                       restart,
+                                       next,
+                                       levelProvider.LevelSettings.MaxLives);
+
         }
+
+
         public LevelContext Context { get { return context; } }
 
+        public LevelSettings Settings { get { return levelSettings; } }
 
         public Point AdjustLocation(Point other)
         {

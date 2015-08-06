@@ -22,14 +22,21 @@ namespace SnakeClone.Map
             this.levelProvider = levelProvider;
             grid = levelProvider.Grid;
             levelSettings = levelProvider.LevelSettings;
-            adjustmentRules = AdjustmentRules.Default(levelProvider.LevelSettings.HorizontalTileCount-1,
-                                                           levelProvider.LevelSettings.VerticalTileCount-1);
+            adjustmentRules = AdjustmentRules.Default(levelProvider.LevelSettings.HorizontalTileCount - 1,
+                                                           levelProvider.LevelSettings.VerticalTileCount - 1);
 
             context = new LevelContext(levelProvider.Head,
+                                       levelProvider.LevelSettings,
                                        levelProvider.TailSpawner,
                                        Direction.Left,
                                        restart,
                                        next,
+                                       location =>
+                                       {
+                                           bool intersects = grid[(int)location.X, (int)location.Y].Intersect(context);
+                                           elements.ForEach(element => intersects|= element.Intersects(location));
+                                           return intersects;
+                                       },
                                        levelProvider.LevelSettings.MaxLives);
             elements.Add(levelProvider.Head);
         }
@@ -57,7 +64,12 @@ namespace SnakeClone.Map
 
         public void Update(double deltaTime)
         {
-            elements.ForEach(element => element.Update(deltaTime));
+            var element = levelProvider.ElementSpawner.Create(context, elements, deltaTime);
+            if (element != null) elements.Add(element);
+
+            elements.ForEach(elemnt => elemnt.Update(context,deltaTime));
+            
+            
         }
 
         public void Render(RenderContext context)
@@ -67,10 +79,6 @@ namespace SnakeClone.Map
                 for (int y = 0; y < levelSettings.VerticalTileCount; y++)
                 {
                     grid[x, y].Render(context);
-                    //context.Batch.DrawString(context.FontContainer["menuFont"],
-                    //    x + " " + y,
-                    //    new Vector2(x * context.LevelRenderInfo.TileWidth, y * context.LevelRenderInfo.TileHeight),
-                    //    Color.Black);
                 }
             }
             elements.ForEach(element => element.Render(context));

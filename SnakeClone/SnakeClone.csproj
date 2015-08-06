@@ -61,6 +61,7 @@
     <Compile Include="Map\ILevelTracker.cs" />
     <Compile Include="Map\LevelTracker.cs" />
     <Compile Include="Rendering\IRenderer.cs" />
+    <Compile Include="Utilities\DisposableEntry.cs" />
     <Compile Include="Utilities\Vector2Extensions.cs" />
     <Compile Include="Utilities\PointExtensions.cs" />
     <Compile Include="Providers\AssetReference.cs" />
@@ -68,7 +69,7 @@
     <Compile Include="Map\DeathTile.cs" />
     <Compile Include="Map\CommonTile.cs" />
     <Compile Include="Actors\Direction.cs" />
-    <Compile Include="Map\IFoodFactory.cs" />
+    <Compile Include="Map\IElementSpawner.cs" />
     <Compile Include="Map\Level.cs" />
     <Compile Include="Providers\HardCodedAssetProvider.cs" />
     <Compile Include="Providers\IAssetProvider.cs" />
@@ -107,12 +108,25 @@
     <Content Include="Content\Mobs\snakeHead.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Settings\1_grid.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Settings\2_grid.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Content\Settings\levels.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Settings\renderSettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Fonts\segoe_12.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

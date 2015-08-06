@@ -6,22 +6,18 @@ namespace SnakeClone.Map
     internal class LevelSettings
     {
         private readonly Point snakeInitialPosition;
-        private readonly IFoodFactory foodFactory;
-
         private readonly int horizontalTileCount;
         private readonly int verticalTileCount;
         private readonly int maxLives;
 
         public LevelSettings(int horizontalTileCount, 
                              int verticalTileCount,
-                             IFoodFactory foodFactory,
                              Point snakeInitialPosition,
                              double snakeSpeed,
                              int maxLives)
         {
             this.maxLives = maxLives;
             this.snakeInitialPosition = snakeInitialPosition;
-            this.foodFactory = foodFactory;
             this.horizontalTileCount = horizontalTileCount;
             this.verticalTileCount = verticalTileCount;
             SnakeSpeed = snakeSpeed;
@@ -30,8 +26,6 @@ namespace SnakeClone.Map
         public int MaxLives {  get { return maxLives; } }
 
         public Point SnakeInitialPosition { get { return snakeInitialPosition; } }
-
-        public IFoodFactory FoodFactory { get { return foodFactory; } }
 
         public int HorizontalTileCount {  get { return horizontalTileCount; } }
 

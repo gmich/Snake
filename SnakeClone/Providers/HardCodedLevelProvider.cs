@@ -9,16 +9,19 @@ namespace SnakeClone.Providers
     {
         private readonly SnakePiece head;
         private readonly Spawner<SnakePiece> tailSpawner;
+        private readonly IElementSpawner elementSpawner;
 
         public HardCodedLevelProvider()
         {
+            elementSpawner = new RandomFoodFactory(5.0d);
+
             tailSpawner = new Spawner<SnakePiece>(position =>
                         new SnakePiece(
                             new Transform(
-                            () => new Color(12.0f, 12.0f, 12.0f),
+                            () => Color.Blue,
                             () => "snakeHead",
                             () => Vector2.One,
-                            () => new Vector2(LevelSettings.SnakeInitialPosition.X, LevelSettings.SnakeInitialPosition.Y),
+                            () => position,
                             () => 0.0f,
                             () => 0.0f)));
 
@@ -32,7 +35,9 @@ namespace SnakeClone.Providers
         }
 
         public LevelSettings LevelSettings
-        { get; } = new LevelSettings(20, 20, new RandomFoodFactory(), new Point(5, 5), 0.1d, 3);
+        { get; } = new LevelSettings(20, 20, new Point(5, 5), 0.1d, 3);
+
+        public IElementSpawner ElementSpawner { get { return elementSpawner; } }
 
         public ITile[,] Grid
         {

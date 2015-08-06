@@ -12,9 +12,10 @@ namespace SnakeClone.Map
             this.transform = transform;
         }
 
-        public void Intersect(LevelContext context)
+        public bool Intersect(LevelContext context)
         {
             context.AddState(new DeathState());
+            return true;
         }
 
         public void Render(RenderContext context)

@@ -9,6 +9,8 @@ namespace SnakeClone.Providers
 
         LevelSettings LevelSettings { get; }
 
+        IElementSpawner ElementSpawner { get;  }
+
         SnakePiece Head { get; }
 
         Spawner<SnakePiece> TailSpawner { get; }

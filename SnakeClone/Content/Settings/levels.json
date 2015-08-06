@@ -1,0 +1,24 @@
+{
+    "levels": [
+        {
+            "name": "level1",
+            "gridReference": "1_grid.txt",
+            "settings": {
+                "maxLives": "3",
+                "snakeSpeed": "0.1",
+                "foodGeneration": "random",
+                "finishingScore": "20"
+            }
+        },
+        {
+            "name": "level2",
+            "gridReference": "2_grid.txt",
+            "settings": {
+                "maxLives": "3",
+                "snakeSpeed": "0.1",
+                "foodGeneration": "random",
+                "finishingScore": "20"
+            }
+        }
+    ]
+}

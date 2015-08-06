@@ -68,8 +68,11 @@ namespace SnakeClone.Map
             if (element != null) elements.Add(element);
 
             elements.ForEach(elemnt => elemnt.Update(context,deltaTime));
-            
-            
+
+            var headLocation = context.SnakeHead.HeadGridLocation.AsPoint();
+            grid[headLocation.X, headLocation.Y].Intersect(context);
+          
+
         }
 
         public void Render(RenderContext context)

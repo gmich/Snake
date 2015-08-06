@@ -3,6 +3,7 @@ using System;
 using Microsoft.Xna.Framework;
 using SnakeClone.Map;
 using SnakeClone.Actors.States;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SnakeClone.Actors
 {
@@ -31,7 +32,7 @@ namespace SnakeClone.Actors
             {
                 disposable.Dispose();
             }
-            if(transform.Location==context.SnakeHead.HeadGridLocation)
+            if (transform.Location == context.SnakeHead.HeadGridLocation)
             {
                 context.AddState(new AddTailState());
                 disposable.Dispose();
@@ -40,7 +41,19 @@ namespace SnakeClone.Actors
 
         public void Render(RenderContext renderContext)
         {
-            renderContext.RenderInGrid(transform);
+            int rectangleOffSet = renderContext.LevelRenderInfo.TileWidth / 5;
+
+            renderContext.Batch.Draw(renderContext.TextureContainer[transform.TextureReference](),
+            new Rectangle((int)transform.Location.X * renderContext.LevelRenderInfo.TileWidth + rectangleOffSet,
+                          (int)transform.Location.Y * renderContext.LevelRenderInfo.TileHeight + rectangleOffSet,
+                          renderContext.LevelRenderInfo.TileWidth - rectangleOffSet * 2,
+                          renderContext.LevelRenderInfo.TileHeight - rectangleOffSet * 2),
+            null,
+            transform.Color,
+            transform.Rotation,
+            Vector2.Zero,
+            SpriteEffects.None,
+            0.0f);
         }
 
         public bool Intersects(Vector2 otherLocation)

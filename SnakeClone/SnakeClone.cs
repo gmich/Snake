@@ -8,8 +8,8 @@ using Microsoft.Xna.Framework.Content;
 using SnakeClone.Rendering;
 using SnakeClone.Providers;
 using System;
-using static SnakeClone.Input.InputManager;
 using Microsoft.Xna.Framework;
+using static SnakeClone.Input.InputManager;
 
 namespace SnakeClone
 {
@@ -31,15 +31,19 @@ namespace SnakeClone
             directionStates = new ReadOnlyCollection<AddState>(new List<AddState>
             {
                 AddState.To(()=>level.Context.AddState(new ChangeDirectionState(Direction.Up)))
-                        .When(() => Keyboard.IsKeyClicked(InputKeys.Up)),
+                        .When(() => Keyboard.IsKeyClicked(InputKeys.Up)
+                        && (level.Context.Direction != Direction.Down || !level.Context.SnakeHead.HasTail)),
                 AddState.To(()=>level.Context.AddState(new ChangeDirectionState(Direction.Down)))
-                        .When(() => Keyboard.IsKeyClicked(InputKeys.Down)),
+                        .When(() => Keyboard.IsKeyClicked(InputKeys.Down)
+                        && (level.Context.Direction != Direction.Up || !level.Context.SnakeHead.HasTail)),
                 AddState.To(()=>level.Context.AddState(new ChangeDirectionState(Direction.Left)))
-                        .When(() => Keyboard.IsKeyClicked(InputKeys.Left)),
+                        .When(() => Keyboard.IsKeyClicked(InputKeys.Left)
+                        && (level.Context.Direction != Direction.Right || !level.Context.SnakeHead.HasTail)),
                 AddState.To(()=>level.Context.AddState(new ChangeDirectionState(Direction.Right)))
-                        .When(() => Keyboard.IsKeyClicked(InputKeys.Right))
-
+                        .When(() => Keyboard.IsKeyClicked(InputKeys.Right)
+                        && (level.Context.Direction != Direction.Left || !level.Context.SnakeHead.HasTail))
             });
+
             var textureContainer = new AssetContainer<Func<Texture2D>>(content);
             var fontContainer = new AssetContainer<SpriteFont>(content);
             assetProvider.LoadAssets(textureContainer, fontContainer);

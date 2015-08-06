@@ -18,15 +18,15 @@ namespace SnakeClone.Providers
             tailSpawner = new Spawner<SnakePiece>(position =>
                         new SnakePiece(
                             new Transform(
-                            () => Color.Blue,
-                            () => "snakeHead",
+                            () => new Color(26, 188, 156),
+                            () => "snakeBody",
                             () => Vector2.One,
                             () => position,
                             () => 0.0f,
                             () => 0.0f)));
 
             head = new SnakePiece(new Transform(
-                            () => Color.BlueViolet,
+                            () => new Color(26, 188, 156),
                             () => "snakeHead",
                             () => Vector2.One,
                             () => new Vector2(LevelSettings.SnakeInitialPosition.X, LevelSettings.SnakeInitialPosition.Y),
@@ -51,7 +51,7 @@ namespace SnakeClone.Providers
                     {
                         var location = new Vector2(x ,y);
                         grid[x, y] = new CommonTile(new Transform(
-                            () => new Color(26.0f, 188.0f, 156.0f),
+                            () => new Color(44, 62, 80),
                             () => AssetReference.WhitePixel,
                             () => Vector2.One,
                             () => location,

@@ -10,6 +10,7 @@ namespace SnakeClone.Actors
     {
         private Transform transform;
         private Point location;
+        private bool hasMoved;
 
         public SnakePiece(Transform transform)
         {
@@ -18,8 +19,8 @@ namespace SnakeClone.Actors
         }
 
         private SnakePiece Tail { get; set; }
-        private bool HasTail { get { return Tail != null; } }
-        public Vector2 HeadGridLocation {  get { return location.AsVector2(); } }
+        public bool HasTail { get { return Tail != null; } }
+        public Vector2 HeadGridLocation { get { return location.AsVector2(); } }
 
         public void Bind(SnakePiece tail)
         {
@@ -35,33 +36,47 @@ namespace SnakeClone.Actors
 
         public Point TailLocation
         {
-            get { return Tail?.location ?? location; }
+            get
+            {
+                Point tailLocation = location;
+                if (Tail != null)
+                {
+                    tailLocation = Tail.TailLocation;
+                }
+                return tailLocation;
+            }
         }
 
         public void MoveTo(Func<Point, Point> newDirection)
         {
-            Tail?.MoveTo(location);
             MoveTo(newDirection(location));
         }
 
         private void MoveTo(Point newLocation)
         {
+            Tail?.MoveTo(location);
             location = newLocation;
             transform = transform.Move(() => location.AsVector2());
-        }
-
-        public void Render(RenderContext renderContext)
-        {
-            renderContext.RenderInGrid(transform);
-            Tail?.Render(renderContext);
+            hasMoved = true;
         }
 
         public void Update(LevelContext context, double deltaTime)
         {
-            //Tail?.Update(context, deltaTime);
-            if (context.IsCellDamageable(location.AsVector2()))
+            CheckBodyCollision(Tail, context, location);
+        }
+
+        private void CheckBodyCollision(SnakePiece piece, LevelContext context, Point locationToTest)
+        {
+            if (piece != null)
             {
-                context.AddState(new DeathState());
+                if (locationToTest == piece.location)
+                {
+                    if (piece.hasMoved)
+                    {
+                        context.AddState(new DeathState());
+                    }
+                }
+                CheckBodyCollision(piece.Tail,context, locationToTest);
             }
         }
 
@@ -73,9 +88,18 @@ namespace SnakeClone.Actors
             }
             else
             {
-                if(Tail!= null) return Tail.Intersects(otherLocation);
+                if (Tail != null)
+                {
+                    return Tail.Intersects(otherLocation);
+                }
             }
             return false;
+        }
+
+        public void Render(RenderContext renderContext)
+        {
+            renderContext.RenderInGrid(transform);
+            Tail?.Render(renderContext);
         }
 
     }

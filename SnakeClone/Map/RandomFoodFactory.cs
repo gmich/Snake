@@ -45,7 +45,7 @@ namespace SnakeClone.Map
                 food = new Food(
                     aliveTime,
                     new Transform(
-                            () => Color.Brown,
+                            () => new Color(230, 126, 34),
                             () => AssetReference.WhitePixel,
                             () => Vector2.One,
                             () => newLocation,

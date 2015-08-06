@@ -16,6 +16,7 @@ namespace SnakeClone.Map
         private readonly Action restart;
         private readonly Action nextLevel;
         private readonly Predicate<Vector2> cellIsEmpty;
+        private int currentScore;
 
         public LevelContext(SnakePiece snakeHead,
                             LevelSettings settings,

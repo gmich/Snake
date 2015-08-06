@@ -23,8 +23,8 @@ namespace SnakeClone
             Components.Add(new Input.InputManager(this));
             gameView = new Rectangle(5, 40, 290, 290);
             Window.Title = "SnakeClone";
-            graphics.PreferredBackBufferWidth = 300; 
-            graphics.PreferredBackBufferHeight = 335; 
+            graphics.PreferredBackBufferWidth = 300;
+            graphics.PreferredBackBufferHeight = 335;
             graphics.ApplyChanges();
         }
 
@@ -75,8 +75,7 @@ namespace SnakeClone
             spriteBatch.End();
 
             renderer.Flush();
-
-
+            GraphicsDevice.Clear(new Color(240,240,241));
         }
     }
 }

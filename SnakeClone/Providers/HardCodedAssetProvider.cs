@@ -32,7 +32,7 @@ namespace SnakeClone.Providers
                 textureContainer.Add(snakeBodyReference.Reference,
                               content => new StaticTexture(content.Load<Texture2D>(@"Mobs/snakeBody")).GetTexture);
 
-                fontContainer.Add("menuFont", content => content.Load<SpriteFont>(@"Fonts/segoe_12"));
+                fontContainer.Add("scoreFont", content => content.Load<SpriteFont>(@"Fonts/scoreFont"));
 
             }
             catch (Exception ex)

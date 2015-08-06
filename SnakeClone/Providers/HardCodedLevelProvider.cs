@@ -35,7 +35,7 @@ namespace SnakeClone.Providers
         }
 
         public LevelSettings LevelSettings
-        { get; } = new LevelSettings(20, 20, new Point(5, 5), 0.1d, 3);
+        { get; } = new LevelSettings(20, 20, new Point(10, 3), 0.12d, 3);
 
         public IElementSpawner ElementSpawner { get { return elementSpawner; } }
 
@@ -49,14 +49,32 @@ namespace SnakeClone.Providers
                 {
                     for (int y = 0; y < LevelSettings.VerticalTileCount; y++)
                     {
-                        var location = new Vector2(x ,y);
-                        grid[x, y] = new CommonTile(new Transform(
-                            () => new Color(44, 62, 80),
-                            () => AssetReference.WhitePixel,
-                            () => Vector2.One,
-                            () => location,
-                            () => 0.0f,
-                            () => 0.0f));
+                        var location = new Vector2(x, y);
+
+                        if ((x == 9 && y == 9)
+                        || (x == 8 && y == 9)
+                        || (x == 9 && y == 8)
+                        || (x == 9 && y == 10)
+                        || (x == 10 && y == 9))
+                        {
+                            grid[x, y] = new DeathTile(new Transform(
+                           () => new Color(189, 195, 199),
+                           () => AssetReference.WhitePixel,
+                           () => Vector2.One,
+                           () => location,
+                           () => 0.0f,
+                           () => 0.0f));
+                        }
+                        else
+                        {
+                            grid[x, y] = new CommonTile(new Transform(
+                                () => new Color(44, 62, 80),
+                                () => AssetReference.WhitePixel,
+                                () => Vector2.One,
+                                () => location,
+                                () => 0.0f,
+                                () => 0.0f));
+                        }
                     }
                 }
                 return grid;

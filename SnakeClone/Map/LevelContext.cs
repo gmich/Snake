@@ -16,7 +16,6 @@ namespace SnakeClone.Map
         private readonly Action restart;
         private readonly Action nextLevel;
         private readonly Predicate<Vector2> cellIsEmpty;
-        private int currentScore;
 
         public LevelContext(SnakePiece snakeHead,
                             LevelSettings settings,
@@ -37,7 +36,15 @@ namespace SnakeClone.Map
             Lives = lives;
         }
 
-        public int Lives { get; set; }
+        public int Lives
+        {
+            get; set;
+        }
+
+        public int Score
+        {
+            get; set;
+        }
 
         public LevelSettings Settings { get { return settings; } }
 

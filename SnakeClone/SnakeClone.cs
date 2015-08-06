@@ -51,6 +51,13 @@ namespace SnakeClone
             NextLevel();
         }
 
+        public Level Level {  get { return level; } }
+
+        public RenderContext RenderContext
+        {
+            get { return renderContext; }
+        }
+
         private Vector2 LevelSize
         {
             get

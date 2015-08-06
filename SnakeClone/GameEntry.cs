@@ -61,9 +61,24 @@ namespace SnakeClone
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             spriteBatch.Draw(renderer.Target, gameView, Color.White);
+
+            //draw score
+            string score = snakeGame.Level.Context.Score.ToString();
+            spriteBatch.DrawString(snakeGame.RenderContext.FontContainer["scoreFont"],
+                                   score,
+                                   ScoreRenderLocation(score),
+                                   new Color(41, 128, 185));
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        private Vector2 ScoreRenderLocation(string score)
+        {
+            var scoreSize = snakeGame.RenderContext.FontContainer["scoreFont"].MeasureString(score);
+
+            return new Vector2(GraphicsDevice.Viewport.Width / 2 - scoreSize.X / 2,
+               (GraphicsDevice.Viewport.Height - gameView.Height) / 2 - scoreSize.Y / 2);
         }
 
         private void RenderSnakeGame()
@@ -75,7 +90,7 @@ namespace SnakeClone
             spriteBatch.End();
 
             renderer.Flush();
-            GraphicsDevice.Clear(new Color(240,240,241));
+            GraphicsDevice.Clear(new Color(240, 240, 241));
         }
     }
 }

@@ -10,6 +10,7 @@ namespace SnakeClone.Actors.States
                 SnakeHead.
                 TailLocation
                 .AsVector2()));
+            context.Score++;
         }
     }
 }

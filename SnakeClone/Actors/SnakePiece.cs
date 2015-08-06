@@ -1,16 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
 using SnakeClone.Rendering;
+using System;
 
 namespace SnakeClone.Actors
 {
     internal class SnakePiece : IGameElement
     {
-        private readonly Transform transform;
+        private Transform transform;
         private Point location;
 
         public SnakePiece(Transform transform)
         {
             this.transform = transform;
+            location = transform.Location.AsPoint();
         }
 
         private SnakePiece Tail { get; set; }
@@ -33,10 +35,16 @@ namespace SnakeClone.Actors
             get { return Tail?.location ?? location; }
         }
 
-        public void MoveTo(Point newLocation)
+        public void MoveTo(Func<Point,Point> newDirection)
         {
             Tail?.MoveTo(location);
+            MoveTo(newDirection(location));
+        }
+
+        private void MoveTo(Point newLocation)
+        {
             location = newLocation;
+            transform = transform.Move(() => newLocation.AsVector2());
         }
 
         public void Render(RenderContext renderContext)
@@ -47,7 +55,6 @@ namespace SnakeClone.Actors
 
         public void Update(double deltaTime)
         {
-            //update local
             Tail?.Update(deltaTime);
         }
 

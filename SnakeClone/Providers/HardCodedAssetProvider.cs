@@ -12,24 +12,28 @@ namespace SnakeClone.Providers
     internal class HardCodedAssetProvider : IAssetProvider
     {
         public LevelRenderInfo RenderInfo
-        { get; } = new LevelRenderInfo(64, 64, 1.0f);
+        { get; } = new LevelRenderInfo(16, 16, 1.0f);
 
-        public IEnumerable<AssetReference> LoadAssets(AssetContainer<Func<Texture2D>> container)
+        public IEnumerable<AssetReference> LoadAssets(AssetContainer<Func<Texture2D>> textureContainer,
+                                                      AssetContainer<SpriteFont> fontContainer)
         {
-            var assetTileReference = new AssetReference(typeof(ITile), Color.White, "blankTile");
+            var assetTileReference = new AssetReference(typeof(ITile), Color.White, "blank");
             var snakeHeadReference = new AssetReference(typeof(SnakePiece), Color.White, "snakeHead");
             var snakeBodyReference = new AssetReference(typeof(SnakePiece), Color.Blue, "snakeBody");
 
             try
             {
-                container.Add(assetTileReference.Reference,
-                              content => new StaticTexture(content.Load<Texture2D>(@"Content/Map/tile")).GetTexture);
+                textureContainer.Add(assetTileReference.Reference,
+                              content => new StaticTexture(content.Load<Texture2D>(@"Map/tile")).GetTexture);
 
-                container.Add(snakeHeadReference.Reference,
-                              content => new StaticTexture(content.Load<Texture2D>(@"Content/Mobs/snakeHead")).GetTexture);
+                textureContainer.Add(snakeHeadReference.Reference,
+                              content => new StaticTexture(content.Load<Texture2D>(@"Mobs/snakeHead")).GetTexture);
 
-                container.Add(snakeHeadReference.Reference,
-                              content => new StaticTexture(content.Load<Texture2D>(@"Content/Mobs/snakeBody")).GetTexture);
+                textureContainer.Add(snakeHeadReference.Reference,
+                              content => new StaticTexture(content.Load<Texture2D>(@"Mobs/snakeBody")).GetTexture);
+
+                fontContainer.Add("menuFont", content => content.Load<SpriteFont>(@"Fonts/segoe_12"));
+
             }
             catch (Exception ex)
             {

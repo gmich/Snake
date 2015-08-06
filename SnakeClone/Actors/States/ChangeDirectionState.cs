@@ -7,7 +7,7 @@ namespace SnakeClone.Actors.States
         private readonly Direction direction;
         public ChangeDirectionState(Direction newDirection)
         {
-            this.direction = newDirection;
+            direction = newDirection;
         }
         public void Handle(LevelContext context)
         {

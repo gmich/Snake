@@ -9,9 +9,14 @@ namespace SnakeClone.Rendering
         private readonly LevelRenderInfo levelRenderInfo;
         private readonly SpriteBatch batch;
         private readonly AssetContainer<Func<Texture2D>> textureContainer;
+        private readonly AssetContainer<SpriteFont> fontContainer;
 
-        public RenderContext(LevelRenderInfo levelRenderInfo, SpriteBatch batch, AssetContainer<Func<Texture2D>> textureContainer)
+        public RenderContext(LevelRenderInfo levelRenderInfo,
+            SpriteBatch batch, 
+            AssetContainer<Func<Texture2D>> textureContainer,
+            AssetContainer<SpriteFont> fontContainer)
         {
+            this.fontContainer = fontContainer;
             this.levelRenderInfo = levelRenderInfo;
             this.batch = batch;
             this.textureContainer = textureContainer;
@@ -22,6 +27,8 @@ namespace SnakeClone.Rendering
         public SpriteBatch Batch {  get { return batch; } }
 
         public AssetContainer<Func<Texture2D>>  TextureContainer {  get { return textureContainer; } }
+
+        public AssetContainer<SpriteFont> FontContainer {  get { return fontContainer; } }
 
         public void RenderInGrid(Transform transform)
         {

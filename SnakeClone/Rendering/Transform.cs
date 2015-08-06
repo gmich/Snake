@@ -35,5 +35,15 @@ namespace SnakeClone.Rendering
         public Vector2 Location { get { return location(); } }
         public float Rotation { get { return rotation(); } }
         public float Layer {  get { return layer(); } }
+
+        public Transform Move(Func<Vector2> newLocation)
+        {
+            return new Transform(color,
+                textureReference, 
+                scale,
+                newLocation, 
+                rotation,
+                layer);
+        }
     }
 }

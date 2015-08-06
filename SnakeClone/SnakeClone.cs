@@ -7,26 +7,27 @@ using System.Collections.ObjectModel;
 using Microsoft.Xna.Framework.Content;
 using SnakeClone.Rendering;
 using SnakeClone.Providers;
-using static SnakeClone.Input.InputManager;
 using System;
+using static SnakeClone.Input.InputManager;
+using Microsoft.Xna.Framework;
 
 namespace SnakeClone
 {
     internal class SnakeClone
     {
-        private readonly List<IGameElement> elements = new List<IGameElement>();
         private readonly ReadOnlyCollection<AddState> directionStates;
         private readonly IAssetProvider assetProvider;
         private readonly ILevelTracker levelTracker;
-
+        private readonly Action<Vector2> configureLevelSize;
         private RenderContext renderContext;
         private Level level;
         private double passedTime;
 
-        public SnakeClone(ILevelTracker levelTracker, IAssetProvider assetProvider)
+        public SnakeClone(Action<Vector2> configureLevelSize, ILevelTracker levelTracker, IAssetProvider assetProvider, SpriteBatch batch, ContentManager content)
         {
             this.assetProvider = assetProvider;
             this.levelTracker = levelTracker;
+            this.configureLevelSize = configureLevelSize;
             directionStates = new ReadOnlyCollection<AddState>(new List<AddState>
             {
                 AddState.To(()=>level.Context.AddState(new ChangeDirectionState(Direction.Up)))
@@ -39,47 +40,71 @@ namespace SnakeClone
                         .When(() => Keyboard.IsKeyClicked(InputKeys.Right))
 
             });
-          
+            var textureContainer = new AssetContainer<Func<Texture2D>>(content);
+            var fontContainer = new AssetContainer<SpriteFont>(content);
+            assetProvider.LoadAssets(textureContainer, fontContainer);
+            renderContext = new RenderContext(assetProvider.RenderInfo, batch, textureContainer, fontContainer);
+            NextLevel();
         }
 
-        public void Restart() 
+        private Vector2 LevelSize
         {
-            level = new Level(levelTracker.Current,NextLevel,Restart);
+            get
+            {
+                return new Vector2(level.Settings.HorizontalTileCount * renderContext.LevelRenderInfo.TileWidth,
+                                  (level.Settings.VerticalTileCount * renderContext.LevelRenderInfo.TileHeight));
+            }
+        }
+
+        public void Restart()
+        {
+            NewLevel(levelTracker.Current);
         }
 
         public void NextLevel()
         {
-            level = new Level(levelTracker.Current, NextLevel, Restart);
+            NewLevel(levelTracker.Next);
         }
 
-        public void LoadContent(SpriteBatch batch, ContentManager content)
+        private void NewLevel(ILevelProvider provider)
         {
-            var textureContainer = new AssetContainer<Func<Texture2D>>(content);
-            assetProvider.LoadAssets(textureContainer);
-            renderContext = new RenderContext(assetProvider.RenderInfo, batch, textureContainer);
+            level = new Level(provider, NextLevel, Restart);
+            configureLevelSize(LevelSize);
         }
 
         public void HandleState()
         {
-            if (level.Settings.SnakeSpeed < passedTime)
+            ISnakeState state = null;
+            while ((state = level.Context.GetState()) != null)
             {
-                foreach (var state in directionStates)
-                {
-                    state.Check();
-                }
-                passedTime = 0.0d;
+                state.Handle(level.Context);
             }
         }
 
         public void Update(double deltaTime)
         {
             passedTime += deltaTime;
-            elements.ForEach(element => element.Update(deltaTime));
+
+            if (level.Settings.SnakeSpeed < passedTime)
+            {
+                passedTime = 0.0d;
+
+                level.Context.SnakeHead.MoveTo(point =>
+                level.AdjustInGrid(
+                    level.Context.Direction.Move(point)));
+            }
+            foreach (var state in directionStates)
+            {
+                state.Check();
+            }
+
+            HandleState();
+            level.Update(deltaTime);
         }
 
         public void Render()
         {
-            elements.ForEach(element => element.Render(renderContext));
+            level.Render(renderContext);
         }
 
     }

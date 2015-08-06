@@ -19,20 +19,20 @@ namespace SnakeClone.Providers
                             () => "snakeHead",
                             () => Vector2.One,
                             () => new Vector2(LevelSettings.SnakeInitialPosition.X, LevelSettings.SnakeInitialPosition.Y),
-                            () => 1.0f,
+                            () => 0.0f,
                             () => 0.0f)));
 
             head = new SnakePiece(new Transform(
-                            () => new Color(12.0f,12.0f,12.0f),
+                            () => Color.BlueViolet,
                             () => "snakeHead",
                             () => Vector2.One,
                             () => new Vector2(LevelSettings.SnakeInitialPosition.X, LevelSettings.SnakeInitialPosition.Y),
-                            () => 1.0f,
+                            () => 0.0f,
                             () => 0.0f));
         }
 
         public LevelSettings LevelSettings
-        { get; } = new LevelSettings(30, 30, new RandomFoodFactory(), new Point(5, 5), 1.0d, 3);
+        { get; } = new LevelSettings(20, 20, new RandomFoodFactory(), new Point(5, 5), 0.1d, 3);
 
         public ITile[,] Grid
         {
@@ -43,13 +43,16 @@ namespace SnakeClone.Providers
                 for (int x = 0; x < LevelSettings.HorizontalTileCount; x++)
                 {
                     for (int y = 0; y < LevelSettings.VerticalTileCount; y++)
+                    {
+                        var location = new Vector2(x ,y);
                         grid[x, y] = new CommonTile(new Transform(
                             () => new Color(26.0f, 188.0f, 156.0f),
                             () => AssetReference.WhitePixel,
                             () => Vector2.One,
-                            () => new Vector2(x * LevelSettings.HorizontalTileCount, y * LevelSettings.VerticalTileCount),
-                            () => 1.0f,
+                            () => location,
+                            () => 0.0f,
                             () => 0.0f));
+                    }
                 }
                 return grid;
             }

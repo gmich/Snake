@@ -6,7 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{4C77DEE0-60D3-4659-A37F-7A532CC92CDC}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SnakeClone</RootNamespace>
     <AssemblyName>SnakeClone</AssemblyName>
@@ -37,6 +37,9 @@
   <PropertyGroup>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Actors\States\AddState.cs" />
     <Compile Include="Actors\States\DeathState.cs" />
@@ -48,7 +51,7 @@
     <Compile Include="Actors\States\ISnakeState.cs" />
     <Compile Include="Actors\Spawner.cs" />
     <Compile Include="AssetContainer.cs" />
-    <Compile Include="Game1.cs" />
+    <Compile Include="GameEntry.cs" />
     <Compile Include="GameType.cs" />
     <Compile Include="Input\IInput.cs" />
     <Compile Include="Input\InputManager.cs" />
@@ -57,6 +60,8 @@
     <Compile Include="Map\AdjustmentRules.cs" />
     <Compile Include="Map\ILevelTracker.cs" />
     <Compile Include="Map\LevelTracker.cs" />
+    <Compile Include="Rendering\IRenderer.cs" />
+    <Compile Include="Utilities\Vector2Extensions.cs" />
     <Compile Include="Utilities\PointExtensions.cs" />
     <Compile Include="Providers\AssetReference.cs" />
     <Compile Include="Providers\HardCodedLevelProvider.cs" />
@@ -75,7 +80,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rendering\LevelRenderInfo.cs" />
-    <Compile Include="Rendering\NotransformationRenderer.cs" />
+    <Compile Include="Rendering\PlainRenderer.cs" />
     <Compile Include="Rendering\RenderContext.cs" />
     <Compile Include="Rendering\StaticTexture.cs" />
     <Compile Include="Rendering\ITexture.cs" />
@@ -93,12 +98,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Map\tile.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Mobs\snakeBody.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Mobs\snakeHead.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Content Include="Content\Fonts\segoe_12.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Fonts\detailsFont.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Fonts\menufont.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <!-- Specify the search path explicitly so the ResolveAssemblyReferences task picks the right ones -->
   <Target Name="BeforeResolveReferences">
     <CreateProperty Value="$(MSBuildProgramFiles32)\MonoGame\v3.0\Assemblies\Windows;$(AssemblySearchPaths)">

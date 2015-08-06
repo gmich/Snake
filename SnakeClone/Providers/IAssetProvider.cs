@@ -7,7 +7,8 @@ namespace SnakeClone.Providers
 {
     interface IAssetProvider
     {
-        IEnumerable<AssetReference> LoadAssets(AssetContainer<Func<Texture2D>> container);
+        IEnumerable<AssetReference> LoadAssets(AssetContainer<Func<Texture2D>> container,
+                                               AssetContainer<SpriteFont> fontContainer);
 
         LevelRenderInfo RenderInfo { get; }
     }

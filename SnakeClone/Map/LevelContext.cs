@@ -8,9 +8,9 @@ namespace SnakeClone.Map
 {
     internal class LevelContext
     {
+        private readonly Queue<ISnakeState> states = new Queue<ISnakeState>();
         private readonly Spawner<SnakePiece> tailSpawner;
         private readonly SnakePiece snakeHead;
-        private readonly Queue<ISnakeState> states;
         private readonly Action restart;
         private readonly Action nextLevel;
 
@@ -64,7 +64,8 @@ namespace SnakeClone.Map
 
         public ISnakeState GetState()
         {
-            return states.Dequeue();
+            return (states.Count > 0) ?
+                states.Dequeue() : null;
         }
     }
 }

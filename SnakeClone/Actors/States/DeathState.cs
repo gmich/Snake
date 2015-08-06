@@ -2,7 +2,7 @@
 
 namespace SnakeClone.Actors.States
 {
-    class DeathState : ISnakeState
+    internal class DeathState : ISnakeState
     {
         public void Handle(LevelContext context)
         {

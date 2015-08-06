@@ -6,10 +6,10 @@ namespace SnakeClone.Input
     {
         public KeyboardInputKeys()
         {
-            Right = Keys.D;
-            Left = Keys.A;
-            Up = Keys.W;
-            Down = Keys.S;
+            Right = Keys.Right;
+            Left = Keys.Left;
+            Up = Keys.Up;
+            Down = Keys.Down;
         }
 
         public Keys Right { get; set; }

@@ -26,7 +26,6 @@ namespace SnakeClone
             return true;
         }
 
-
         public bool Remove(string id)
         {
             return assets.Remove(id);

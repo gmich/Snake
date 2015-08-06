@@ -30,16 +30,16 @@ namespace SnakeClone
             this.configureLevelSize = configureLevelSize;
             directionStates = new ReadOnlyCollection<AddState>(new List<AddState>
             {
-                AddState.To(()=>level.Context.AddState(new ChangeDirectionState(Direction.Up)))
+                AddState.To(()=>level.Context.ChangeDirection(new ChangeDirectionState(Direction.Up)))
                         .When(() => Keyboard.IsKeyClicked(InputKeys.Up)
                         && (level.Context.Direction != Direction.Down || !level.Context.SnakeHead.HasTail)),
-                AddState.To(()=>level.Context.AddState(new ChangeDirectionState(Direction.Down)))
+                AddState.To(()=>level.Context.ChangeDirection(new ChangeDirectionState(Direction.Down)))
                         .When(() => Keyboard.IsKeyClicked(InputKeys.Down)
                         && (level.Context.Direction != Direction.Up || !level.Context.SnakeHead.HasTail)),
-                AddState.To(()=>level.Context.AddState(new ChangeDirectionState(Direction.Left)))
+                AddState.To(()=>level.Context.ChangeDirection(new ChangeDirectionState(Direction.Left)))
                         .When(() => Keyboard.IsKeyClicked(InputKeys.Left)
                         && (level.Context.Direction != Direction.Right || !level.Context.SnakeHead.HasTail)),
-                AddState.To(()=>level.Context.AddState(new ChangeDirectionState(Direction.Right)))
+                AddState.To(()=>level.Context.ChangeDirection(new ChangeDirectionState(Direction.Right)))
                         .When(() => Keyboard.IsKeyClicked(InputKeys.Right)
                         && (level.Context.Direction != Direction.Left || !level.Context.SnakeHead.HasTail))
             });
@@ -51,7 +51,7 @@ namespace SnakeClone
             NextLevel();
         }
 
-        public Level Level {  get { return level; } }
+        public Level Level { get { return level; } }
 
         public RenderContext RenderContext
         {
@@ -98,6 +98,11 @@ namespace SnakeClone
 
             if (level.Settings.SnakeSpeed < passedTime)
             {
+                var directionState = level.Context.GetDirection();
+                if(directionState != null)
+                {
+                    directionState.Handle(level.Context);
+                }
                 passedTime = 0.0d;
 
                 level.Context.SnakeHead.MoveTo(point =>

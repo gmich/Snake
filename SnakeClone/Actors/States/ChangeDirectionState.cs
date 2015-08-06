@@ -2,13 +2,15 @@
 
 namespace SnakeClone.Actors.States
 {
-    class ChangeDirectionState : ISnakeState
+    internal class ChangeDirectionState : ISnakeState
     {
         private readonly Direction direction;
+
         public ChangeDirectionState(Direction newDirection)
         {
             direction = newDirection;
         }
+
         public void Handle(LevelContext context)
         {
             context.Direction = direction;

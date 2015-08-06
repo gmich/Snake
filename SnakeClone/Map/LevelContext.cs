@@ -10,6 +10,7 @@ namespace SnakeClone.Map
     internal class LevelContext
     {
         private readonly Queue<ISnakeState> states = new Queue<ISnakeState>();
+        private readonly Queue<ISnakeState> directionStates = new Queue<ISnakeState>();
         private readonly Spawner<SnakePiece> tailSpawner;
         private readonly SnakePiece snakeHead;
         private readonly LevelSettings settings;
@@ -91,10 +92,21 @@ namespace SnakeClone.Map
             states.Enqueue(state);
         }
 
+        public void ChangeDirection(ISnakeState state)
+        {
+            directionStates.Enqueue(state);
+        }
+
         public ISnakeState GetState()
         {
             return (states.Count > 0) ?
                 states.Dequeue() : null;
+        }
+
+        public ISnakeState GetDirection()
+        {
+            return (directionStates.Count > 0) ?
+                directionStates.Dequeue() : null;
         }
     }
 }

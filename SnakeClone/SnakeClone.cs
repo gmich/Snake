@@ -30,10 +30,10 @@ namespace SnakeClone
             this.assetProvider = assetProvider;
             this.levelTracker = levelTracker;
             this.configureLevelSize = configureLevelSize;
-            AddMessages(new RenderedMessage("\n\n\n\n{arrow keys}", new Color(241, 196, 15)),
-                        new RenderedMessage("\n\n\n\n\n\nto navigate", new Color(240, 240, 241)),
-                        new RenderedMessage("\n\n\nn\n\n\n\n\n\n{enter}", new Color(241, 196, 15)),
-                        new RenderedMessage("\n\n\n\n\n\n\n\n\n\n\nto play", new Color(240, 240, 241)));
+            AddMessages(new RenderedMessage(()=>"\n\n\n\n{arrow keys}", new Color(241, 196, 15)),
+                        new RenderedMessage(() => "\n\n\n\n\n\nto navigate", new Color(240, 240, 241)),
+                        new RenderedMessage(() => "\n\n\nn\n\n\n\n\n\n{enter}", new Color(241, 196, 15)),
+                        new RenderedMessage(() => "\n\n\n\n\n\n\n\n\n\n\nto play", new Color(240, 240, 241)));
 
             onContinuePlaying = () => NewLevel(levelTracker.Next);
 
@@ -101,8 +101,8 @@ namespace SnakeClone
         
         public void Restart()
         {
-            Pause(new RenderedMessage(level.Context.Score.ToString(),new Color(41, 128, 185)),
-                  new RenderedMessage("\n\n{enter}", new Color(241, 196, 15)));
+            Pause(new RenderedMessage(() => level.Context.Score.ToString(),new Color(41, 128, 185)),
+                  new RenderedMessage(() => "\n\n{enter}", new Color(241, 196, 15)));
             onContinuePlaying = () => NewLevel(levelTracker.Current);
         }
 
@@ -133,9 +133,8 @@ namespace SnakeClone
                 if (Keyboard.IsKeyReleased(Microsoft.Xna.Framework.Input.Keys.Enter))
                 {
                     GameState = GameState.Playing;
-                    AddMessages(new RenderedMessage(
-                        level.Context.Score.ToString(),
-                        new Color(41, 128, 185)));
+                    AddMessages(new RenderedMessage(() => level.Context.Score.ToString(),
+                                                    new Color(41, 128, 185)));
                     onContinuePlaying();
                 }
                 return;

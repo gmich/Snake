@@ -4,7 +4,6 @@ using SnakeClone.Rendering;
 using SnakeClone.Actors;
 using System.Diagnostics;
 using System.Linq;
-using System;
 
 namespace SnakeClone.Providers
 {

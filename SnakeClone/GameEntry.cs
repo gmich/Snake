@@ -5,9 +5,7 @@ using SnakeClone.Rendering;
 
 namespace SnakeClone
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
+
     public class GameEntry : Game
     {
         private IRenderer renderer;
@@ -22,9 +20,10 @@ namespace SnakeClone
             Content.RootDirectory = "Content";
             Components.Add(new Input.InputManager(this));
             gameView = new Rectangle(5, 40, 290, 290);
-            Window.Title = "SnakeClone";
+            Window.Title = "snake";
             graphics.PreferredBackBufferWidth = 300;
             graphics.PreferredBackBufferHeight = 335;
+            graphics.IsFullScreen = true;
             graphics.ApplyChanges();
         }
 
@@ -51,7 +50,6 @@ namespace SnakeClone
 
         protected override void Draw(GameTime gameTime)
         {
-
             RenderSnakeGame();
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);

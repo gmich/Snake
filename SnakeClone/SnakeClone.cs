@@ -31,10 +31,13 @@ namespace SnakeClone
             this.levelTracker = levelTracker;
             this.configureLevelSize = configureLevelSize;
             AddMessages(new RenderedMessage(() => "snake", new Color(44, 62, 80)),
-                        new RenderedMessage(()=>"\n\n\n\n{arrow keys}", new Color(241, 196, 15)),
-                        new RenderedMessage(() => "\n\n\n\n\n\nto navigate", new Color(240, 240, 241)),
-                        new RenderedMessage(() => "\n\n\nn\n\n\n\n\n\n{enter}", new Color(241, 196, 15)),
-                        new RenderedMessage(() => "\n\n\n\n\n\n\n\n\n\n\nto play", new Color(240, 240, 241)));
+                        new RenderedMessage(()=>"\n\n{arrow keys}", new Color(241, 196, 15)),
+                        new RenderedMessage(() => "\n\n\n\nto navigate", new Color(240, 240, 241)),
+                        new RenderedMessage(() => "\n\n\n\n\n\n\n{enter}", new Color(241, 196, 15)),
+                        new RenderedMessage(() => "\n\n\n\n\n\n\n\n\nto play", new Color(240, 240, 241)),
+                        new RenderedMessage(() => "\n\n\n\n\n\n\n\n\n\n\n\n{escape}", new Color(241, 196, 15)),
+                        new RenderedMessage(() => "\n\n\n\n\n\n\n\n\n\n\n\n\n\nto quit", new Color(240, 240, 241)));
+
 
             onContinuePlaying = () => NewLevel(levelTracker.Next);
 
@@ -103,7 +106,7 @@ namespace SnakeClone
         public void Restart()
         {
             Pause(new RenderedMessage(() => level.Context.Score.ToString(), new Color(44, 62, 80)),
-                  new RenderedMessage(() => "\n\n{enter}", new Color(241, 196, 15)));
+                  new RenderedMessage(() => "\n\n\n{enter}", new Color(241, 196, 15)));
             onContinuePlaying = () => NewLevel(levelTracker.Current);
         }
 

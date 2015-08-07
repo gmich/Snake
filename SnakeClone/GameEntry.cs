@@ -57,15 +57,23 @@ namespace SnakeClone
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             spriteBatch.Draw(renderer.Target, gameView, Color.White);
 
-            //draw message
-            string msg = snakeGame.Message();
-            spriteBatch.DrawString(snakeGame.RenderContext.FontContainer["scoreFont"],
-                                   msg,
-                                   MessageRenderLocation(msg),
-                                   new Color(41, 128, 185));
+            foreach(var msg in snakeGame.Messages)
+            {
+                RenderMessages(msg);
+            }
+
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        private void RenderMessages(RenderedMessage message)
+        {
+            string msg = message.Message;
+            spriteBatch.DrawString(snakeGame.RenderContext.FontContainer["scoreFont"],
+                                   msg,
+                                   MessageRenderLocation(msg),
+                                   message.Color);
         }
 
         private Vector2 MessageRenderLocation(string msg)

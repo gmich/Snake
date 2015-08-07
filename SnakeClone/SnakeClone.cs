@@ -23,13 +23,18 @@ namespace SnakeClone
         private Level level;
         private double passedTime;
         private Action onContinuePlaying;
+        private readonly List<RenderedMessage> messages = new List<RenderedMessage>();
 
         public SnakeClone(Action<Vector2> configureLevelSize, ILevelTracker levelTracker, IAssetProvider assetProvider, SpriteBatch batch, ContentManager content)
         {
             this.assetProvider = assetProvider;
             this.levelTracker = levelTracker;
             this.configureLevelSize = configureLevelSize;
-            Message = () => "\n\n\n\n\n\n\n{arrow keys}\nto navigate\n\n  {enter}\n  to play ";
+            AddMessages(new RenderedMessage("\n\n\n\n{arrow keys}", new Color(241, 196, 15)),
+                        new RenderedMessage("\n\n\n\n\n\nto navigate", new Color(240, 240, 241)),
+                        new RenderedMessage("\n\n\nn\n\n\n\n\n\n{enter}", new Color(241, 196, 15)),
+                        new RenderedMessage("\n\n\n\n\n\n\n\n\n\n\nto play", new Color(240, 240, 241)));
+
             onContinuePlaying = () => NewLevel(levelTracker.Next);
 
             directionStates = new ReadOnlyCollection<AddState>(new List<AddState>
@@ -77,18 +82,27 @@ namespace SnakeClone
 
         #endregion
 
-        public void Pause(string reason)
+        public void Pause(params RenderedMessage[] reasons)
         {
             GameState = GameState.Paused;
-            Message = () => reason;
+            AddMessages(reasons);
         }
 
-        public Func<string> Message { get; private set; }
+        private void AddMessages(params RenderedMessage[] reasons)
+        {
+            messages.Clear();
+            foreach (var reason in reasons)
+            {
+                messages.Add(reason);
+            }
+        }
 
-
+        public IEnumerable<RenderedMessage> Messages { get { return messages; } }
+        
         public void Restart()
         {
-            Pause("\n   " + level.Context.Score + "\n{enter}");
+            Pause(new RenderedMessage(level.Context.Score.ToString(),new Color(41, 128, 185)),
+                  new RenderedMessage("\n\n{enter}", new Color(241, 196, 15)));
             onContinuePlaying = () => NewLevel(levelTracker.Current);
         }
 
@@ -119,7 +133,9 @@ namespace SnakeClone
                 if (Keyboard.IsKeyReleased(Microsoft.Xna.Framework.Input.Keys.Enter))
                 {
                     GameState = GameState.Playing;
-                    Message = () => level.Context.Score.ToString();
+                    AddMessages(new RenderedMessage(
+                        level.Context.Score.ToString(),
+                        new Color(41, 128, 185)));
                     onContinuePlaying();
                 }
                 return;

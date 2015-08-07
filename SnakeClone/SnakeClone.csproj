@@ -61,6 +61,7 @@
     <Compile Include="Map\AdjustmentRules.cs" />
     <Compile Include="Map\ILevelTracker.cs" />
     <Compile Include="Map\LevelTracker.cs" />
+    <Compile Include="RenderedMessage.cs" />
     <Compile Include="Rendering\IRenderer.cs" />
     <Compile Include="Utilities\DisposableEntry.cs" />
     <Compile Include="Utilities\Vector2Extensions.cs" />

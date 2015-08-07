@@ -52,6 +52,7 @@
     <Compile Include="Actors\Spawner.cs" />
     <Compile Include="AssetContainer.cs" />
     <Compile Include="GameEntry.cs" />
+    <Compile Include="GameState.cs" />
     <Compile Include="GameType.cs" />
     <Compile Include="Input\IInput.cs" />
     <Compile Include="Input\InputManager.cs" />

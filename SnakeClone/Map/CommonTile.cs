@@ -4,7 +4,6 @@ namespace SnakeClone.Map
 {
     internal class CommonTile : ITile
     {
-
         private readonly Transform transform;
 
         public CommonTile(Transform transform)
@@ -12,9 +11,14 @@ namespace SnakeClone.Map
             this.transform = transform;
         }
 
-        public bool Intersect(LevelContext context)
+        public bool Collide()
         {
             return false;
+        }
+
+        public void Intersect(LevelContext context)
+        {
+            return;
         }
 
         public void Render(RenderContext renderContext)

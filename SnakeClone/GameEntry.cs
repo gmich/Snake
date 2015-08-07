@@ -39,11 +39,6 @@ namespace SnakeClone
                                        Content);
         }
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -62,29 +57,29 @@ namespace SnakeClone
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             spriteBatch.Draw(renderer.Target, gameView, Color.White);
 
-            //draw score
-            string score = snakeGame.Level.Context.Score.ToString();
+            //draw message
+            string msg = snakeGame.Message();
             spriteBatch.DrawString(snakeGame.RenderContext.FontContainer["scoreFont"],
-                                   score,
-                                   ScoreRenderLocation(score),
+                                   msg,
+                                   MessageRenderLocation(msg),
                                    new Color(41, 128, 185));
             spriteBatch.End();
 
             base.Draw(gameTime);
         }
 
-        private Vector2 ScoreRenderLocation(string score)
+        private Vector2 MessageRenderLocation(string msg)
         {
-            var scoreSize = snakeGame.RenderContext.FontContainer["scoreFont"].MeasureString(score);
+            var msgSize = snakeGame.RenderContext.FontContainer["scoreFont"].MeasureString(msg);
 
-            return new Vector2(GraphicsDevice.Viewport.Width / 2 - scoreSize.X / 2,
-               (GraphicsDevice.Viewport.Height - gameView.Height) / 2 - scoreSize.Y / 2);
+            return new Vector2(GraphicsDevice.Viewport.Width / 2 - msgSize.X / 2,
+               (GraphicsDevice.Viewport.Height - gameView.Height) / 2 - msgSize.Y / 2);
         }
 
         private void RenderSnakeGame()
         {
             renderer.Setup();
-
+            GraphicsDevice.Clear(new Color(44, 62, 80));
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             snakeGame.Render();
             spriteBatch.End();

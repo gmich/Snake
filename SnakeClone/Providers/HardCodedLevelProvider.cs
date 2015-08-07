@@ -35,7 +35,7 @@ namespace SnakeClone.Providers
         }
 
         public LevelSettings LevelSettings
-        { get; } = new LevelSettings(20, 20, new Point(10, 3), 0.12d, 3);
+        { get; } = new LevelSettings(20, 20, new Point(10, 3), 0.11d, 3);
 
         public IElementSpawner ElementSpawner { get { return elementSpawner; } }
 

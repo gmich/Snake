@@ -2,7 +2,9 @@
 {
     internal interface ITile
     {
-        bool Intersect(LevelContext context);
+        bool Collide();
+
+        void Intersect(LevelContext context);
 
         void Render(Rendering.RenderContext renderContext);
     }

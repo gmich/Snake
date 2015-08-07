@@ -33,7 +33,7 @@ namespace SnakeClone.Map
                                        next,
                                        location =>
                                        {
-                                           bool intersects = grid[(int)location.X, (int)location.Y].Intersect(context);
+                                           bool intersects = grid[(int)location.X, (int)location.Y].Collide();
                                            elements.ForEach(element => intersects|= element.Intersects(location));
                                            return intersects;
                                        },

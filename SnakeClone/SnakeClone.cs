@@ -22,12 +22,16 @@ namespace SnakeClone
         private RenderContext renderContext;
         private Level level;
         private double passedTime;
+        private Action onContinuePlaying;
 
         public SnakeClone(Action<Vector2> configureLevelSize, ILevelTracker levelTracker, IAssetProvider assetProvider, SpriteBatch batch, ContentManager content)
         {
             this.assetProvider = assetProvider;
             this.levelTracker = levelTracker;
             this.configureLevelSize = configureLevelSize;
+            Message = () => "\n\n\n\n\n\n\n{arrow keys}\nto navigate\n\n  {enter}\n  to play ";
+            onContinuePlaying = () => NewLevel(levelTracker.Next);
+
             directionStates = new ReadOnlyCollection<AddState>(new List<AddState>
             {
                 AddState.To(()=>level.Context.ChangeDirection(new ChangeDirectionState(Direction.Up)))
@@ -51,7 +55,11 @@ namespace SnakeClone
             NextLevel();
         }
 
+        #region Properties
+
         public Level Level { get { return level; } }
+
+        public GameState GameState { get; set; }
 
         public RenderContext RenderContext
         {
@@ -67,14 +75,26 @@ namespace SnakeClone
             }
         }
 
+        #endregion
+
+        public void Pause(string reason)
+        {
+            GameState = GameState.Paused;
+            Message = () => reason;
+        }
+
+        public Func<string> Message { get; private set; }
+
+
         public void Restart()
         {
-            NewLevel(levelTracker.Current);
+            Pause("\n   " + level.Context.Score + "\n{enter}");
+            onContinuePlaying = () => NewLevel(levelTracker.Current);
         }
 
         public void NextLevel()
         {
-            NewLevel(levelTracker.Next);
+            NewLevel(levelTracker.Next);           
         }
 
         private void NewLevel(ILevelProvider provider)
@@ -94,12 +114,23 @@ namespace SnakeClone
 
         public void Update(double deltaTime)
         {
+            if (GameState!= GameState.Playing)
+            {
+                if (Keyboard.IsKeyReleased(Microsoft.Xna.Framework.Input.Keys.Enter))
+                {
+                    GameState = GameState.Playing;
+                    Message = () => level.Context.Score.ToString();
+                    onContinuePlaying();
+                }
+                return;
+            }
+
             passedTime += deltaTime;
 
             if (level.Settings.SnakeSpeed < passedTime)
             {
                 var directionState = level.Context.GetDirection();
-                if(directionState != null)
+                if (directionState != null)
                 {
                     directionState.Handle(level.Context);
                 }
@@ -120,6 +151,7 @@ namespace SnakeClone
 
         public void Render()
         {
+            if (GameState == GameState.NewGame) return;
             level.Render(renderContext);
         }
 

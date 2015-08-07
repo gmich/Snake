@@ -30,7 +30,8 @@ namespace SnakeClone
             this.assetProvider = assetProvider;
             this.levelTracker = levelTracker;
             this.configureLevelSize = configureLevelSize;
-            AddMessages(new RenderedMessage(()=>"\n\n\n\n{arrow keys}", new Color(241, 196, 15)),
+            AddMessages(new RenderedMessage(() => "snake", new Color(44, 62, 80)),
+                        new RenderedMessage(()=>"\n\n\n\n{arrow keys}", new Color(241, 196, 15)),
                         new RenderedMessage(() => "\n\n\n\n\n\nto navigate", new Color(240, 240, 241)),
                         new RenderedMessage(() => "\n\n\nn\n\n\n\n\n\n{enter}", new Color(241, 196, 15)),
                         new RenderedMessage(() => "\n\n\n\n\n\n\n\n\n\n\nto play", new Color(240, 240, 241)));
@@ -101,7 +102,7 @@ namespace SnakeClone
         
         public void Restart()
         {
-            Pause(new RenderedMessage(() => level.Context.Score.ToString(),new Color(41, 128, 185)),
+            Pause(new RenderedMessage(() => level.Context.Score.ToString(), new Color(44, 62, 80)),
                   new RenderedMessage(() => "\n\n{enter}", new Color(241, 196, 15)));
             onContinuePlaying = () => NewLevel(levelTracker.Current);
         }
@@ -134,7 +135,7 @@ namespace SnakeClone
                 {
                     GameState = GameState.Playing;
                     AddMessages(new RenderedMessage(() => level.Context.Score.ToString(),
-                                                    new Color(41, 128, 185)));
+                                                    new Color(44, 62, 80)));
                     onContinuePlaying();
                 }
                 return;

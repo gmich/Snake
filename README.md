@@ -1,5 +1,5 @@
 # Snake
-A clone of the classic Snake game in C#
+A clone of the classic Snake game in monogame C#
 
 <img src="https://github.com/gmich/Snake/blob/master/SnakeClone/Content/ingame_screenshot.jpg" 
 alt="Snake Screenshot" 
